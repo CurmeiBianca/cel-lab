@@ -22,7 +22,7 @@ Acest repository contine implementarea proiectului pentru disciplina *Inteligent
 
 CelLab permite:
 - definirea unui automat celular in limbaj natural,
-- validarea rehulilor si a starilor, 
+- validarea regulilor si a starilor, 
 - simularea generatiilor succesive,
 - vizualizarea evolutiei,
 - salvarea starilor,
@@ -35,7 +35,7 @@ CelLab permite:
 
 Proiectul este organizat in module:
 
-- **Interfata garfica (Stremlit)** - input, configurare, vizualizare
+- **Interfata grafica (Stremlit)** - input, configurare, vizualizare
 - **Parser NLP** - interpretarea descrierii naturale
 - **Motor de simulare (NumPy)** - calculul generatiilor
 - **Analiza** - stabilitate, cicluri, numar celule, configuratii

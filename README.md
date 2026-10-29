@@ -35,7 +35,7 @@ CelLab permite:
 
 Proiectul este organizat in module:
 
-- **Interfata grafica (Stremlit)** - input, configurare, vizualizare
+- **Interfata grafica (Streamlit)** - input, configurare, vizualizare
 - **Parser NLP** - interpretarea descrierii naturale
 - **Motor de simulare (NumPy)** - calculul generatiilor
 - **Analiza** - stabilitate, cicluri, numar celule, configuratii

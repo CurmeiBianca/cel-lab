@@ -22,3 +22,7 @@ Thumbs.db
 .env.local
 .env.development
 .env.production
+venv/
+__pycache__/
+data/saved_states/
+.pytest_cache/

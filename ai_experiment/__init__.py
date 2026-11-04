@@ -1,1 +1,1 @@
-"""Experimente ML CelLab."""
+"""Experimente AI pentru CelLab."""

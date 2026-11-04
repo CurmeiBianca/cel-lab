@@ -1,0 +1,1 @@
+"""Analiza rezultatelor simulărilor CelLab."""

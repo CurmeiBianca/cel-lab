@@ -34,6 +34,7 @@ if RADACINA not in sys.path:
 
 from core.world import World          # grila
 from core.automaton import Automaton  # aplicarea regulilor
+from core.validator import valideaza_configurare, valideaza_fisier_salvat
 
 
 # ======================================================================
@@ -177,16 +178,22 @@ def incarca_in_aplicatie():
     """Rulează la click pe 'Încarcă', înainte de redesenarea paginii."""
     s = st.session_state
     date = incarca_stare(os.path.join(DOSAR_SALVARI, s.fisier_ales))
-    s.automat = date["automat"]
-    s.nume_automat = date["automat"]     # mută și selectorul din bara laterală
-    if date["istoric"]:
-        s.istoric = [np.array(x, dtype=np.int8) for x in date["istoric"]]
-        s.gen_start = date["gen_start"]
-    else:
-        s.istoric = [np.array(date["stare"], dtype=np.int8)]
-        s.gen_start = date["generatie"]
-    s.vizualizat = len(s.istoric) - 1
-    s.gen_stabila = None
+
+    #adaugat functie valideaza_fisier_salvat, trece datele citite prin filtru inainte de a le baga in memorie
+    try:
+        valideaza_fisier_salvat(date)
+        s.automat = date["automat"]
+        s.nume_automat = date["automat"]     # mută și selectorul din bara laterală
+        if date["istoric"]:
+            s.istoric = [np.array(x, dtype=np.int8) for x in date["istoric"]]
+            s.gen_start = date["gen_start"]
+        else:
+            s.istoric = [np.array(date["stare"], dtype=np.int8)]
+            s.gen_start = date["generatie"]
+        s.vizualizat = len(s.istoric) - 1
+        s.gen_stabila = None
+    except ValueError as eroare:
+        st.error(f"Nu se poate încărca salvarea: {eroare}")
 
 
 def muta_sliderul():
@@ -232,8 +239,15 @@ with st.sidebar:
     seed = st.number_input("Seed", 0, 99999, 42)
     st.session_state.pastreaza = st.checkbox("Salvează generațiile intermediare", value=True)
 
+    #adaugat functie valideaza_configurare pt verificarea datelor(validarea)
     if st.button("Generează starea inițială", type="primary", use_container_width=True):
-        reseteaza(nume, randuri, coloane, mod, densitate, seed)
+        try:
+            config = valideaza_configurare(nume, randuri, coloane, mod, densitate)
+            randuri_sigure = config["dimensiuni"]["randuri"]
+            coloane_sigure = config["dimensiuni"]["coloane"]
+            reseteaza(nume, randuri_sigure, coloane_sigure, mod, densitate, seed)
+        except ValueError as eroare:
+            st.error(f"Eroare de validare: {eroare}")
 
 # prima rulare sau automat schimbat -> reinițializare
 if "istoric" not in st.session_state or st.session_state.automat != nume:

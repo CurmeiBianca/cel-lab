@@ -34,7 +34,7 @@ if RADACINA not in sys.path:
 
 from core.world import World          # grila
 from core.automaton import Automaton  # aplicarea regulilor
-from core.validator import valideaza_configurare, valideaza_fisier_salvat
+from nlp.parser import valideaza_configurare, valideaza_fisier_salvat
 
 
 # ======================================================================
